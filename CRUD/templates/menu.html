@@ -1,0 +1,23 @@
+{%extends 'base.html'%}
+
+{% block bloco_row1 %}
+
+
+{%for x in range(1,10)%}
+<div class="card mt-3"  style="width: 15rem;margin-right: 30px;" >
+
+    
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/International_Pokémon_logo.svg/1200px-International_Pokémon_logo.svg.png" class="card-img-top" alt="1">
+    <div class="card-body">
+        <h5 class="card-title">Card title</h5>
+        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+    </div>
+    <ul class="list-group list-group-flush">
+    <li class="list-group-item">An item</li>
+    <li class="list-group-item">A second item</li>
+    <li class="list-group-item">A third item</li>
+    </ul>
+</div>
+{%endfor%}
+
+{%endblock %}

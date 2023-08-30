@@ -1,0 +1,66 @@
+{%extends 'base.html'%}
+{%block bloco_container %}
+<div class="container text-center">
+    <form id = "create_page" class = "form-inline my-2 my-lg-0"  method="POST" enctype=multipart/form-data>
+    <div class="row row-cols-2">
+        <div class="col">
+            
+                <label for="pokemon_id" class="form-label" style="margin-top: 60px;" >Id</label>
+                <input class="form-control" id= "pokemon_id" type="text" value="{{content_id_box}}" aria-label="Disabled input example" disabled readonly>
+        
+        
+    </div>
+
+    <div class="col">
+
+        <label for="pokemon_name" class="form-label" style="margin-top: 60px;">Nome</label>
+        <input type="text" id="pokemon_name" name = "pokemon_name" class="form-control" value = "{{content_name_box}}"> 
+        <div class="form-text" id="basic-addon4">{{name_status}}</div>
+    </div>
+
+    <div class="col">
+        <label for="TypeList" class="form-label" style = "margin-top: 60px;">Selecione um tipo</label>
+        <input class="form-control" list="datalistOptions" id="TypeList" name="pokemon_type" value = "{{content_type_box}}">
+        <datalist id="datalistOptions">
+        <option value="Normal">
+        <option value="Fire">
+        <option value="Water">
+        <option value="Grass">
+        <option value="Flying">
+        <option value="Fighting">
+        <option value="Poison">
+        <option value="Electric">
+        <option value="Ground">
+        <option value="Rock">
+        <option value="Psychic">
+        <option value="Ice">
+        <option value="Bug">
+        <option value="Ghost">
+        <option value="Steel">
+        <option value="Dragon">
+        <option value="Dark">
+        <option value="Fairy">
+            
+        </datalist>
+        <div class="form-text" id="basic-addon4">{{type_status}}</div>
+    </div>
+    <div class="col">
+        <div class="mb-3">
+            <label for="file" class="form-label" style="margin-top: 60px;">Imagem do Pokémon</label>
+            <input class="form-control" type="file" id="file" name="file">
+            <div class="form-text" id="basic-addon4">{{img_status}}</div>
+        </div>
+    </div>
+    
+    </div>
+    </form>
+    <button class ="btn btn-primary btn-lg" form = "create_page" type="submit" style="margin-top: 50px;">Criar</button>
+
+    {%if foto%}
+    <img src="{{foto}}" class="image"/>
+    {%endif%}
+
+</div>
+
+
+{% endblock %}
