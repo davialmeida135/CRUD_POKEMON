@@ -5,7 +5,7 @@ from flask import request
 import os
 from pathlib import Path
 from flask import flash, request, redirect, url_for
-from EditDB import select_all_pokemon,create_pokemon,create_connection
+from EditDB import select_all_pokemon,create_pokemon,create_connection,Pokemon
 from werkzeug.utils import secure_filename
 
 UPLOAD_FOLDER = 'static/uploads'
@@ -30,28 +30,28 @@ def create_view():
     ''' Criar conexão com database de pokemons
         Criar array com todos os pokemons da database'''
     
-    database_path = r"D:\Davi\FlaskTestes\CRUD\db\pokemons.db"
+    database_path = "db\pokemons.db"
     conn = create_connection(database_path)
 
     database = select_all_pokemon(conn) #array de arrays com todos os pokemons da database
 
-    newPokemonId = 1
+    newPokemon = Pokemon(1,'','','')
+    newPokemon.id = 1
     invalidPokemon = False
     if len(database) > 0:
-        newPokemonId = database[-1][0] +1 #id do proximo pokemon a ser criado será o id do ultimo pokemon +1
+        newPokemon.id = database[-1][0] +1 #id do proximo pokemon a ser criado será o id do ultimo pokemon +1
 
         
 
     if request.method != 'POST': #primeiro load da pagina
-        return render_template('create.html',content_id_box=newPokemonId)
+        return render_template('create.html',content_id_box=newPokemon.id)
     
     filepath = None
     name_status = img_status =  ''
-    newPokemonName = newPokemonType = ''
-    newPokemonName = request.form.get("pokemon_name")
-    newPokemonType = request.form.get("pokemon_type")
-    print(newPokemonName)
-    print(newPokemonType)
+    newPokemon.name = request.form.get("pokemon_name")
+    newPokemon.type = request.form.get("pokemon_type")
+    print(newPokemon.name)
+    print(newPokemon.type)
 
     # Check if the post request has the file part
     # UPLOAD DA IMAGEM
@@ -68,22 +68,19 @@ def create_view():
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], nomearquivo))
         
      # Se não há nome e tipo, o pokemon nao pode ser criado   
-    if not newPokemonName:
+    if not newPokemon.name:
         name_status = "Não foi inserido um nome"
         invalidPokemon = True
         print(name_status)
-    if not newPokemonType:
+    if not newPokemon.type:
         invalidPokemon = True
         type_status = "Não foi inserido um tipo"
         print(type_status)
     if invalidPokemon:
-        return render_template('create.html',content_id_box=newPokemonId,content_type_box=newPokemonType,content_name_box=newPokemonName,img_status=img_status,type_status=type_status,name_status=name_status)
-
+        return render_template('create.html',content_id_box=newPokemon.id,content_type_box=newPokemon.type,content_name_box=newPokemon.name,img_status=img_status,type_status=type_status,name_status=name_status)
     
 
-
-
-    return render_template('create.html',content_id_box=newPokemonId,content_type_box=newPokemonType,content_name_box=newPokemonName)
+    return render_template('create.html',content_id_box=newPokemon.id,content_type_box=newPokemon.type,content_name_box=newPokemon.name)
 
         
 

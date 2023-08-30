@@ -1,5 +1,13 @@
 import sqlite3
 from sqlite3 import Error
+from dataclasses import dataclass
+
+@dataclass
+class Pokemon:
+    id: int
+    name: str
+    type: str
+    img: str
 
 def create_connection(db_file):
     """ create a database connection to the SQLite database
@@ -101,7 +109,7 @@ def select_pokemon_by_id(conn, id):
     
 def main():
 
-    database = r"D:\Davi\FlaskTestes\CRUD\db\pokemons.db"
+    database = "db\pokemons.db"
     conn = create_connection(database)
 
     if conn is not None:
@@ -111,7 +119,7 @@ def main():
         poke3 = (3,"Tepig","Fire","batata")
         poke4 = (4,"Squirtle","Water","batata")
         poke5 = (7,"Totodile","Water","batata")
-        poke6 = (6,"Totodile","Electric","batata")
+        poke8 = Pokemon(8,"Pikachu","Electric","https://upload.wikimedia.org/wikipedia/en/thumb/a/a6/Pokémon_Pikachu_art.png/220px-Pokémon_Pikachu_art.png")
         ''' 
         delete_pokemon(conn,1)
 
@@ -119,10 +127,11 @@ def main():
         create_pokemon(conn,poke2)
         create_pokemon(conn,poke3)
         create_pokemon(conn,poke4)
+        create_pokemon(conn,poke5)
+
         create_pokemon(conn,poke5)'''
 
-        create_pokemon(conn,poke5)
-        create_pokemon(conn,poke6)
+        create_pokemon(conn,(poke8.id,poke8.name,poke8.type,poke8.img))
         a = select_all_pokemon(conn)
         print(len(a))
        
