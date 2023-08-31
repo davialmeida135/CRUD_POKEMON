@@ -101,7 +101,7 @@ def select_pokemon_by_id(conn, id):
     :return:
     """
     cur = conn.cursor()
-    cur.execute("SELECT * FROM pokemons WHERE img=?", (id))
+    cur.execute("SELECT * FROM pokemons WHERE id=?", (id))
 
     rows = cur.fetchall()
 
@@ -129,12 +129,12 @@ def main():
         create_pokemon(conn,poke4)
         create_pokemon(conn,poke5)
 
-        create_pokemon(conn,poke5)'''
+        create_pokemon(conn,poke5)
 
         create_pokemon(conn,(poke8.id,poke8.name,poke8.type,poke8.img))
         a = select_all_pokemon(conn)
         print(len(a))
-       
+       '''
 
 
 

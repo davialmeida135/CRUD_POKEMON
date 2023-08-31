@@ -1,0 +1,13 @@
+{%extends 'base.html'%}
+{%block bloco_container %}
+
+<div class="alert alert-success" role="alert" style="margin-top: 100px;align-self: center">
+  {{success_message}}
+</div>
+<a href="{{url_for('create_view')}}"> 
+<button class ="btn btn-primary btn-lg"  type="submit"  name="create" style="margin-left: 160px;">Criar outro Pokémon</button>
+</a>
+<a href="{{url_for('menu_view')}}"> 
+  <button class ="btn btn-primary btn-lg"  type="submit" href="{{url_for('menu_view')}}" name="menu" style="margin-left: 240px;">Voltar para o  Menu Principal</button>
+</a>
+{%endblock%}
