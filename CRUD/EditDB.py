@@ -87,7 +87,7 @@ def select_pokemon_by_name(conn, name):
     :return:
     """
     cur = conn.cursor()
-    cur.execute("SELECT * FROM pokemons WHERE name=?", (str(name)))
+    cur.execute("SELECT * FROM pokemons WHERE name=?", (str(name),))
 
     rows = cur.fetchall()
 
@@ -101,7 +101,7 @@ def select_pokemon_by_id(conn, id):
     :return:
     """
     cur = conn.cursor()
-    cur.execute("SELECT * FROM pokemons WHERE id=?", (id))
+    cur.execute("SELECT * FROM pokemons WHERE id=?", (id,))
 
     rows = cur.fetchall()
 
@@ -135,8 +135,11 @@ def main():
         a = select_all_pokemon(conn)
         print(len(a))
        '''
-
-
+        a =select_pokemon_by_name(conn, "Vorn")
+        b =select_pokemon_by_id(conn, 122)
+        
+        if b: print(b[0][1])
+        else: print("not found")
 
     else:
         print("Error! cannot create the database connection.")

@@ -1,0 +1,16 @@
+{%extends 'base.html'%}
+{%block bloco_container %}
+<div class="col">
+    <form id = "update_menu" class = "form-inline my-2 my-lg-0"  method="POST" enctype=multipart/form-data>
+    <label for="IdList" class="form-label" style = "margin-top: 60px;">Selecione o Id do pokémon a ser editado</label>
+    <input class="form-control" list="datalistOptions" id="IdList" name="pokemon_id" value = "{{id_box}}">
+    <datalist id="datalistOptions">
+    {%for pokemon in pokemonList %}
+    <option value="{{pokemon[0]}}">
+    {%endfor%}
+    </datalist>
+    <div class="form-text" id="basic-addon4">{{id_status}}</div>
+</div>
+</form>
+<button class ="btn btn-primary btn-lg" form = "update_menu" type="submit" style="margin-top: 50px;">Selecionar</button>
+{%endblock%}

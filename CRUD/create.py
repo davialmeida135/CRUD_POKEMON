@@ -1,7 +1,6 @@
-#flask --app hello run --debug
+#flask --app main run --debug
 from app import app
 from flask import render_template
-from flask import request
 import os
 from pathlib import Path
 from flask import flash, request, redirect, url_for
@@ -15,7 +14,7 @@ ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['SESSION_TYPE'] = 'filesystem'
-app.config['SECRET_KEY'] = 'chave_secreta'
+app.config['SECRET_KEY'] = 'secret_key'
 
 def allowed_file(filename):
     return '.' in filename and \
@@ -23,7 +22,7 @@ def allowed_file(filename):
 
 
 #Pagina criar pokemon
-@app.route('/create', methods=['GET', 'POST'])
+@app.route('/create/', methods=['GET', 'POST'])
 def create_view():
 
     #pokemonName, pokemonType ,pokemonId ,pokemon_img,filename, img_status ,name_status, type_status
@@ -36,7 +35,7 @@ def create_view():
 
     database = select_all_pokemon(conn) #array de arrays com todos os pokemons da database
 
-    newPokemon = Pokemon(1,'','','')
+    newPokemon = Pokemon(1,'','','https://img.pokemondb.net/artwork/vector/large/unown-question.png')
     newPokemon.id = 1
 
     invalidPokemon = False
