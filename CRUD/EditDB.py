@@ -38,9 +38,9 @@ def create_pokemon(conn, pokemon):
     cur.execute(sql, pokemon)
     conn.commit()
 
-def update_pokemon(conn, pokemon):
+def update_pokemon(conn, id, name, type, img):
     """
-    update priority, begin_date, and end date of a pokemon
+    update id, name, type, img of a pokemon
     :param conn:
     :param pokemon:
     :return: project id
@@ -52,7 +52,7 @@ def update_pokemon(conn, pokemon):
             WHERE id = ?
         '''
     cur = conn.cursor()
-    cur.execute(sql, pokemon)
+    cur.execute(sql,(name,type,img,id))
     conn.commit()
 
 def delete_pokemon(conn, id):
@@ -69,7 +69,7 @@ def delete_pokemon(conn, id):
 
 def select_all_pokemon(conn):
     """
-    Query all rows in the tasks table
+    Query all rows in the pokemons table
     :param conn: the Connection object
     :return:
     """
@@ -81,9 +81,9 @@ def select_all_pokemon(conn):
 
 def select_pokemon_by_name(conn, name):
     """
-    Query pokemon by priority
+    Query pokemon by name
     :param conn: the Connection object
-    :param priority:
+    :param name:
     :return:
     """
     cur = conn.cursor()
@@ -95,9 +95,9 @@ def select_pokemon_by_name(conn, name):
 
 def select_pokemon_by_id(conn, id):
     """
-    Query pokemon by priority
+    Query pokemon by id
     :param conn: the Connection object
-    :param priority:
+    :param id:
     :return:
     """
     cur = conn.cursor()
@@ -111,39 +111,15 @@ def main():
 
     database = "db\pokemons.db"
     conn = create_connection(database)
-
+    '''
     if conn is not None:
-           # create projects table
-        poke1 = (1,"Charmander","Fire","batata")
-        poke2 = (2,"Slugma","Fire","batata")
-        poke3 = (3,"Tepig","Fire","batata")
-        poke4 = (4,"Squirtle","Water","batata")
-        poke5 = (7,"Totodile","Water","batata")
-        poke8 = Pokemon(8,"Pikachu","Electric","https://upload.wikimedia.org/wikipedia/en/thumb/a/a6/Pokémon_Pikachu_art.png/220px-Pokémon_Pikachu_art.png")
-        ''' 
-        delete_pokemon(conn,1)
+        # create projects table
+         poke1 = (1,"Charmander","Fire","batata")
 
-        create_pokemon(conn,poke1)
-        create_pokemon(conn,poke2)
-        create_pokemon(conn,poke3)
-        create_pokemon(conn,poke4)
-        create_pokemon(conn,poke5)
-
-        create_pokemon(conn,poke5)
-
-        create_pokemon(conn,(poke8.id,poke8.name,poke8.type,poke8.img))
-        a = select_all_pokemon(conn)
-        print(len(a))
-       '''
-        a =select_pokemon_by_name(conn, "Vorn")
-        b =select_pokemon_by_id(conn, 122)
-        
-        if b: print(b[0][1])
-        else: print("not found")
 
     else:
         print("Error! cannot create the database connection.")
-
+    '''
 
 if __name__ == '__main__':
     main()

@@ -1,0 +1,14 @@
+{%extends 'base.html'%}
+{%block bloco_container %}
+<div class="col">
+    <form id = "delete_view" class = "form-inline my-2 my-lg-0"  method="POST" enctype=multipart/form-data>
+    <label for="IdList" class="form-label" style = "color: crimson; margin-top: 60px;">Tem certeza que quer deletar o Pokémon com o seguinte Id?</label>
+    <input class="form-control" id= "pokemon_id" type="text" value="{{id_box}}" aria-label="Disabled input example" disabled readonly>
+</form>
+</div>
+<button class ="btn btn-primary btn-lg" form = "delete_view" type="submit" style="margin-top: 50px;">Tenho</button>
+<a href= "{{url_for('delete_menu')}}">
+    <button class ="btn btn-primary btn-lg" type="submit" style="margin-top: 50px;">Voltar atrás</button>
+</a>
+
+{%endblock%}

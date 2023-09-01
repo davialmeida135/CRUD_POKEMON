@@ -16,18 +16,18 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="{{url_for('create_view')}}">Create</a>
+                <a class="nav-link " aria-current="page" href="{{url_for('create_view')}}">Create</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link active" href="{{url_for('update_menu')}}">Update</a>
+                <a class="nav-link " href="{{url_for('update_menu')}}">Update</a>
               </li>
             
               <li class="nav-item">
-                <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+                <a class="nav-link " href="{{url_for('delete_menu')}}">Delete</a>
               </li>
             </ul>
             <form class="d-flex" role="search">
-              <input class="form-control me-2" type="pokemon_pesquisado" placeholder="Search" aria-label="Search">
+              <input class="form-control me-2" name = "search" type="search" placeholder="Search" aria-label="Search">
               <button class="btn btn-outline-success" type="submit">Search</button>
             </form>
           </div>

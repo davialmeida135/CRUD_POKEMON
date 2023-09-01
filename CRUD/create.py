@@ -3,7 +3,7 @@ from app import app
 from flask import render_template
 import os
 from pathlib import Path
-from flask import flash, request, redirect, url_for
+from flask import flash, request, url_for
 from EditDB import select_all_pokemon,create_pokemon,create_connection,Pokemon
 from werkzeug.utils import secure_filename
 from success import success_view
@@ -30,8 +30,8 @@ def create_view():
     ''' Criar conexão com database de pokemons
         Criar array com todos os pokemons da database'''
     
-    database_path = "db\pokemons.db"
-    conn = create_connection(database_path)
+    databasePath = "db\pokemons.db"
+    conn = create_connection(databasePath)
 
     database = select_all_pokemon(conn) #array de arrays com todos os pokemons da database
 
@@ -48,7 +48,7 @@ def create_view():
         return render_template('create.html',id_box=newPokemon.id)
     
 
-    filepath = None
+    filePath = None
     name_status = img_status = type_status =''
     newPokemon.name = request.form.get("pokemon_name")
     newPokemon.type = request.form.get("pokemon_type")
@@ -66,12 +66,12 @@ def create_view():
         img_status=("Nenhum arquivo foi selecionado")
         flash('No selected file')
     elif file and allowed_file(file.filename):
-        nomearquivo = secure_filename(file.filename)
-        filepath = 'uploads/' + nomearquivo
-        filepath = url_for('static', filename=filepath)
-        print (filepath)
-        newPokemon.img = filepath
-        file.save(os.path.join(app.config['UPLOAD_FOLDER'], nomearquivo))
+        nomeArquivo = secure_filename(file.filename)
+        filePath = 'uploads/' + nomeArquivo
+        filePath = url_for('static', filename=filePath)
+        print (filePath)
+        newPokemon.img = filePath
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], nomeArquivo))
         
      # Se não há nome e tipo, o pokemon nao pode ser criado   
     if not newPokemon.name:
@@ -84,15 +84,17 @@ def create_view():
         print(type_status)
     if invalidPokemon:
         return render_template('create.html',img = newPokemon.img,id_box=newPokemon.id,type_box=newPokemon.type,name_box=newPokemon.name,img_status=img_status,type_status=type_status,name_status=name_status,newPokemon_status = newPokemon_status)
+    
     try:
         create_pokemon(conn,(newPokemon.id,newPokemon.name,newPokemon.type,newPokemon.img))
         newPokemon_status = "Pokémon de id {} criado com sucesso!".format(newPokemon.id)
         
-    except Exception as e:
-        create_pokemon(conn,(newPokemon.id,newPokemon.name,newPokemon.type,newPokemon.img))
+    except :
+        return render_template('create.html',img = newPokemon.img,id_box=newPokemon.id,type_box=newPokemon.type,name_box=newPokemon.name,img_status=img_status,type_status=type_status,name_status=name_status,newPokemon_status = newPokemon_status)
 
-
-    return success_view(newPokemon_status)
+    botao = "Criar outro Pokémon"
+    botao_url = "/create/"
+    return success_view(newPokemon_status,botao,botao_url)
 
         
 

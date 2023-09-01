@@ -2,7 +2,7 @@
 {%block bloco_container %}
 <div class="col">
     <form id = "update_menu" class = "form-inline my-2 my-lg-0"  method="POST" enctype=multipart/form-data>
-    <label for="IdList" class="form-label" style = "margin-top: 60px;">Selecione o Id do pokémon a ser editado</label>
+    <label for="IdList" class="form-label" style = "margin-top: 60px;">Selecione o Id do pokémon a ser {{action}}</label>
     <input class="form-control" list="datalistOptions" id="IdList" name="pokemon_id" value = "{{id_box}}">
     <datalist id="datalistOptions">
     {%for pokemon in pokemonList %}
