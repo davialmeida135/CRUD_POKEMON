@@ -6,6 +6,7 @@ from flask import flash, request, redirect, url_for
 from EditDB import select_all_pokemon,create_connection,Pokemon,select_pokemon_by_id,update_pokemon
 from werkzeug.utils import secure_filename
 from success import success_view
+from create import allowed_file
 
 
 UPLOAD_FOLDER = 'static/uploads'
@@ -15,12 +16,7 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['SESSION_TYPE'] = 'filesystem'
 app.config['SECRET_KEY'] = 'secret_key'
 
-def allowed_file(filename):
-    return '.' in filename and \
-        filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-
-
-#Pagina update pokemon
+#Pagina de selecionar o id do pokemon pra atualizar
 @app.route('/update/', methods=['GET', 'POST'])
 def update_menu():
 
@@ -48,9 +44,11 @@ def update_view(id):
     pokemon = select_pokemon_by_id(conn,id)[0]
     pokemon = Pokemon(pokemon[0],pokemon[1],pokemon[2],pokemon[3])
 
-    if request.method != 'POST': #primeiro load da pagina
+    #Primeiro load da pagina
+    if request.method != 'POST': 
         return render_template('update.html',id_box=pokemon.id,type_box=pokemon.type,name_box=pokemon.name)
     
+    #Se for um POST: 
     invalidPokemon = False
     filePath = None
     name_status = img_status = type_status =''

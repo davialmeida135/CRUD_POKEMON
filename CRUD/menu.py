@@ -11,12 +11,14 @@ from EditDB import select_all_pokemon,create_connection
 
 @app.route('/', methods=['GET', 'POST'])
 def menu_view():
-    databasePath = "db\pokemons.db"
-    conn = create_connection(databasePath)
+    database_path = "db\pokemons.db"
+    conn = create_connection(database_path)
     database = select_all_pokemon(conn)
-    pesquisa = request.args.get('search')
-    
 
+    pesquisa = request.args.get('search') 
+    
+    #Listar todos os pokemons que tem em seu nome a pesquisa feita
+    #Se nao houver nenhum, é retornada a lista completa 
     listaPokemons = []
     if pesquisa:
         pesquisa = pesquisa.lower()

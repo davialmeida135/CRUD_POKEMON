@@ -24,43 +24,38 @@ def allowed_file(filename):
 #Pagina criar pokemon
 @app.route('/create/', methods=['GET', 'POST'])
 def create_view():
+    #Criar conexão com database
+    database_path = "db\pokemons.db"
+    conn = create_connection(database_path)
 
-    #pokemonName, pokemonType ,pokemonId ,pokemon_img,filename, img_status ,name_status, type_status
+    #Array com todos os pokemons da database
+    database = select_all_pokemon(conn) 
 
-    ''' Criar conexão com database de pokemons
-        Criar array com todos os pokemons da database'''
-    
-    databasePath = "db\pokemons.db"
-    conn = create_connection(databasePath)
-
-    database = select_all_pokemon(conn) #array de arrays com todos os pokemons da database
-
+    #Objeto do tipo Pokemon, para auxiliar na criação
     newPokemon = Pokemon(1,'','','https://img.pokemondb.net/artwork/vector/large/unown-question.png')
     newPokemon.id = 1
 
-    invalidPokemon = False
+    
     if len(database) > 0:
         newPokemon.id = database[-1][0] +1 #id do proximo pokemon a ser criado será o id do ultimo pokemon +1
 
-        
-
-    if request.method != 'POST': #primeiro load da pagina
+    #Primeiro load da pagina
+    if request.method != 'POST': 
         return render_template('create.html',id_box=newPokemon.id)
     
-
+    #Passando os valores registrados para a variavel newPokemon
+    #Declarando algumas variaveis
     filePath = None
     name_status = img_status = type_status =''
     newPokemon.name = request.form.get("pokemon_name")
     newPokemon.type = request.form.get("pokemon_type")
     newPokemon_status = "Não foi possível criar o Pokémon"
-
+    invalidPokemon = False
     print(newPokemon.name)
     print(newPokemon.type)
 
     # Check if the post request has the file part
     # UPLOAD DA IMAGEM
-    
-
     file = request.files['file']
     if file.filename == '':
         img_status=("Nenhum arquivo foi selecionado")
@@ -73,18 +68,21 @@ def create_view():
         newPokemon.img = filePath
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], nomeArquivo))
         
-     # Se não há nome e tipo, o pokemon nao pode ser criado   
+    #Se não há nome ou tipo, o pokemon nao pode ser criado   
     if not newPokemon.name:
         name_status = "Não foi inserido um nome"
         invalidPokemon = True
         print(name_status)
+
     if not newPokemon.type:
         invalidPokemon = True
         type_status = "Não foi inserido um tipo"
         print(type_status)
+
     if invalidPokemon:
         return render_template('create.html',img = newPokemon.img,id_box=newPokemon.id,type_box=newPokemon.type,name_box=newPokemon.name,img_status=img_status,type_status=type_status,name_status=name_status,newPokemon_status = newPokemon_status)
     
+    #Tenta criar o pokemon
     try:
         create_pokemon(conn,(newPokemon.id,newPokemon.name,newPokemon.type,newPokemon.img))
         newPokemon_status = "Pokémon de id {} criado com sucesso!".format(newPokemon.id)
@@ -92,6 +90,7 @@ def create_view():
     except :
         return render_template('create.html',img = newPokemon.img,id_box=newPokemon.id,type_box=newPokemon.type,name_box=newPokemon.name,img_status=img_status,type_status=type_status,name_status=name_status,newPokemon_status = newPokemon_status)
 
+    #Se a criação foi um sucesso:
     botao = "Criar outro Pokémon"
     botao_url = "/create/"
     return success_view(newPokemon_status,botao,botao_url)
