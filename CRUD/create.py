@@ -2,7 +2,7 @@
 from app import app
 from flask import render_template
 import os
-from pathlib import Path
+
 from flask import flash, request, url_for
 from EditDB import select_all_pokemon,create_pokemon,create_connection,Pokemon
 from werkzeug.utils import secure_filename
